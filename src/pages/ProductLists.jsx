@@ -1,4 +1,5 @@
-import { findByLabelText } from '@testing-library/react';
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Announcements from '../components/Announcements';
 import Footer from '../components/Footer';
@@ -6,6 +7,7 @@ import Navbar from '../components/Navbar';
 import NewsLetter from '../components/NewsLetter';
 import Products from '../components/Products';
 import {mobile} from "../responsive";
+
 
 const Container = styled.div``;
 const Title = styled.h1`
@@ -36,6 +38,18 @@ const Select = styled.select `
 const Option = styled.option ``;
 
 const ProductLists = () => {
+    const location = useLocation();
+    const category = location.pathname.split("/")[2];
+    const [filters, setFilters] = useState({});
+    const [sort, setSort] = useState("newest");
+    function handleFilters(e){
+        const value = e.target.value;
+        setFilters({
+            ...filters,
+            [e.target.name]: value
+        })
+    };
+
     return (
         <Container>
             <Navbar/>
@@ -44,37 +58,40 @@ const ProductLists = () => {
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products:</FilterText>
-                    <Select>
-                        <Option disabled selected>
+                    <Select name="brand" onChange={handleFilters}>
+                        <Option disabled>
                             Brands
                         </Option>
                         <Option>Toyota</Option>
                         <Option>Lexus</Option>
                         <Option>Benz</Option>
                     </Select>
-                    <Select>
+                    <Select name="year" onChange={handleFilters}>
                         <Option disabled selected>
                             Year
                         </Option>
-                        <Option>2005-2010</Option>
-                        <Option>2012-2014</Option>
-                        <Option>2016-2018</Option>
-                        <Option>2018-2020</Option>
-                        <Option>2020-{new Date().getFullYear()}</Option>
+                        <Option>2005</Option>
+                        <Option>2010</Option>
+                        <Option>2012</Option>
+                        <Option>2015</Option>
+                        <Option>2018</Option>
+                        <Option>2020</Option>
+                        <Option>2021</Option>
+                        <Option>{new Date().getFullYear()}</Option>
                     </Select>
                     </Filter>
                 <Filter><FilterText>Sort Products:</FilterText>
-                <Select>
-                        <Option disabled selected>
-                            Price
+                <Select onChange={(e)=> setSort(e.target.value)}>
+                        <Option value="newest">
+                            Newest
                         </Option>
-                        <Option>price(asc)</Option>
-                        <Option>price(dsc)</Option>
+                        <Option value="asc">Price(asc)</Option>
+                        <Option value="desc">Price(dsc)</Option>
                     </Select>
                 </Filter>
 
             </FilterContainer>
-            <Products/>
+            <Products cat={category} filters={filters} sort={sort}/>
             <NewsLetter/>
             <Footer/>
         </Container>

@@ -27,16 +27,19 @@ export const categories = [
     id: 1,
     img: "https://p.kindpng.com/picc/s/110-1102492_toyota-logos-brands-transparent-background-toyota-logo-hd.png",
     title: "Toyota",
+    cat: "utility"
   },
   {
     id: 2,
     img: "https://www.seekpng.com/png/small/130-1307464_lamborghini-logo-transparent-lamborghini-logo-letters.png",
     title: "Lamborghini",
+    cat:"luxury"
   },
   {
     id: 3,
     img: "https://www.kindpng.com/picc/m/185-1853724_image-png-mercedes-benz-logo-transparent-car-bmw.png",
     title: "Mercedes Benz",
+    cat: "luxury"
   },
 ];
 
